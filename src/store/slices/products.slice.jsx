@@ -33,12 +33,25 @@ export const getProductThunk = () => (dispatch) => {
     .finally(() => dispatch(setIsLoading(false)));
 };
 
-export const filterCategoryThunk = () => (dispatch) => {
+export const filterCategoryThunk = (id) => (dispatch) => {
+  dispatch(setIsLoading(true));
+
   axios
-    .get('https://e-commerce-api-v2.academlo.tech/api/v1/products?categoryld=2')
+    .get(`https://e-commerce-api-v2.academlo.tech/api/v1/products?categoryId=${id}`)
     .then((res) => {
       dispatch(setProduct(res.data));
-      console.log(res.data);
+    })
+    .catch((error) => console.error(error))
+    .finally(() => dispatch(setIsLoading(false)));
+};
+
+export const filterTitleThunk = (value) => (dispatch) => {
+  dispatch(setIsLoading(true));
+
+  axios
+    .get(`https://e-commerce-api-v2.academlo.tech/api/v1/products?title=${value}`)
+    .then((res) => {
+      dispatch(setProduct(res.data));
     })
     .catch((error) => console.error(error))
     .finally(() => dispatch(setIsLoading(false)));

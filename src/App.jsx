@@ -1,4 +1,3 @@
-import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import AppNavbar from './components/AppNavbar';
 import Home from './pages/Home';
@@ -8,6 +7,7 @@ import ProductDetail from './pages/ProductDetail';
 import Loader from './components/Loader';
 import { useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 const App = () => {
   const isLoading = useSelector((state) => state.isLoading);
@@ -22,7 +22,9 @@ const App = () => {
           <Route element={<Login />} path="/login" />
           <Route element={<ProductDetail />} path="/product/:id" />
           {/* Rutas Protegidas */}
-          <Route element={<Purchases />} path="/purchases" />
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Purchases />} path="/purchases" />
+          </Route>
         </Routes>
       </Container>
     </HashRouter>
